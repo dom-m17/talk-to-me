@@ -12,14 +12,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type Fact struct {
-	Fact string `json:"fact"`
+type MeowFact struct {
+	Data []string `json:"data"`
 }
 
-// factCmd represents the fact command
-var factCmd = &cobra.Command{
-	Use:   "fact",
-	Short: "A brief description of your command",
+// meowFactCmd represents the meowFact command
+var meowFactCmd = &cobra.Command{
+	Use:     "meowFact",
+	Aliases: []string{"meow-fact"},
+	Short:   "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -36,7 +37,7 @@ to quickly create a Cobra application.`,
 		client := &http.Client{}
 		request, err := http.NewRequest(
 			http.MethodGet,
-			fmt.Sprintf("%s%s", cfg.ApiNinjaBaseURL.String(), "facts"),
+			cfg.MeowFactBaseURL.String(),
 			nil,
 		)
 		if err != nil {
@@ -44,13 +45,9 @@ to quickly create a Cobra application.`,
 			return
 		}
 
-		request.Header.Add("Accept", "application/json")
-		request.Header.Add("X-Api-Key", cfg.ApiNinjaAPIKey)
-		request.Header.Add("User-Agent", "cobra cli application - github.com/dom-m17/talk-to-me")
-
 		resp, err := client.Do(request)
 		if err != nil {
-			fmt.Println("get error:", err)
+			fmt.Println("get error")
 			return
 		}
 
@@ -60,27 +57,26 @@ to quickly create a Cobra application.`,
 			return
 		}
 
-		var fact []Fact
+		var fact MeowFact
 		err = json.Unmarshal(body, &fact)
 		if err != nil {
-			fmt.Println("Unmarshal error:", err)
-			return
+			fmt.Println("unmarshal error:", err)
 		}
 
-		fmt.Println(fact[0].Fact)
+		fmt.Println(fact.Data[0])
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(factCmd)
+	rootCmd.AddCommand(meowFactCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// factCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// meowFactCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// factCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// meowFactCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

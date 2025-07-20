@@ -25,11 +25,16 @@ var dadJokeCmd = &cobra.Command{
 	Short:   "Prints out a dad joke",
 	Long:    `Funny joke`,
 	Run: func(cmd *cobra.Command, args []string) {
+		cfg, err := ReadConfig()
+		if err != nil {
+			fmt.Println("reading config", err)
+			return
+		}
+
 		client := &http.Client{}
-		// Create http request
 		request, err := http.NewRequest(
 			http.MethodGet,
-			"https://icanhazdadjoke.com/",
+			cfg.DadJokeBaseURL.String(),
 			nil,
 		)
 		if err != nil {

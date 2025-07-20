@@ -29,13 +29,15 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		apiKey := "lcoc1douCyqhb2wWGyRERA==ET2aHkOYDwQacZss"
-		url := "https://api.api-ninjas.com/v1/quotes"
+		cfg, err := ReadConfig()
+		if err != nil {
+			fmt.Println("reading config:", err)
+		}
 
 		client := &http.Client{}
 		request, err := http.NewRequest(
 			http.MethodGet,
-			url,
+			fmt.Sprintf("%s%s", cfg.ApiNinjaBaseURL.String(), "quotes"),
 			nil,
 		)
 		if err != nil {
@@ -44,7 +46,7 @@ to quickly create a Cobra application.`,
 		}
 
 		request.Header.Add("Accept", "application/json")
-		request.Header.Add("X-Api-Key", apiKey)
+		request.Header.Add("X-Api-Key", cfg.ApiNinjaAPIKey)
 		request.Header.Add("User-Agent", "cobra cli application - github.com/dom-m17/talk-to-me")
 
 		resp, err := client.Do(request)

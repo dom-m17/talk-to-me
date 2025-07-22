@@ -12,12 +12,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type DadJoke struct {
-	ID     string `json:"id"`
-	Joke   string `json:"joke"`
-	Status int    `json:"status"`
-}
-
 // dadJokeCmd represents the dadJoke command
 var dadJokeCmd = &cobra.Command{
 	Use:     "dadJoke",

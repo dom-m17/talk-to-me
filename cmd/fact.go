@@ -12,10 +12,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type Fact struct {
-	Fact string `json:"fact"`
-}
-
 // factCmd represents the fact command
 var factCmd = &cobra.Command{
 	Use: "fact",

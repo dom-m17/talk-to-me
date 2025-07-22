@@ -12,12 +12,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type Quote struct {
-	Quote    string `json:"quote"`
-	Author   string `json:"author"`
-	Category string `json:"category"`
-}
-
 // quoteCmd represents the quote command
 var quoteCmd = &cobra.Command{
 	Use:   "quote",

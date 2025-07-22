@@ -15,6 +15,7 @@ type Config struct {
 	AbstractBaseURL url.URL `envconfig:"ABSTRACT_BASE_URL" required:"true"`
 	DadJokeBaseURL  url.URL `envconfig:"DAD_JOKE_BASE_URL" required:"true"`
 	MeowFactBaseURL url.URL `envconfig:"MEOW_FACT_BASE_URL" required:"true"`
+	TriviaBaseURL   url.URL `envconfig:"TRIVIA_BASE_URL" required:"true"`
 }
 
 func ReadConfig() (Config, error) {
